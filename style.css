@@ -1,0 +1,36 @@
+
+/* Element Selector */
+body {
+background-color: pink;
+font-family: Arial;
+margin: 20px;}
+
+/* Element Selector */
+h1 {
+color: darkblue;}
+
+/* ID Selector */
+#main-title {text-align: center;}
+
+/* Class Selector */
+.intro {}
+
+/* Flexbox Layout */
+nav {
+display: flex;
+gap: 20px;
+background-color: white;
+padding: 15px;
+border: 1px solid gray;}
+
+/* Links */
+nav a {color: blue;
+text-decoration: none;}
+
+/* Hover Effect */
+nav a:hover {color: red;}
+
+/* Footer */
+footer {border-top: 1px solid gray;
+margin-top: 30px;
+padding: 10px;}
