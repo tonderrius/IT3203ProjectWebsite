@@ -6,14 +6,14 @@ font-family: Arial;
 margin: 20px;}
 
 /* Element Selector */
-h1 {
-color: darkblue;}
+h1 {color: darkblue;}
 
 /* ID Selector */
 #main-title {text-align: center;}
 
 /* Class Selector */
-.intro {}
+.intro {font-size: 18px;
+padding: 10px;}
 
 /* Flexbox Layout */
 nav {
