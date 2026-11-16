@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTTP Quiz</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navigation Menu -->
+<nav>
+<a href="index.html">Home</a>
+<a href="how-http-works.html">How HTTP Works</a>
+<a href="https.html">HTTP vs HTTPS</a>
+<a href="concepts.html">Key Concepts</a>
+<a href="references.html">References</a>
+<a href="about.html">About Me</a>
+<a href="quiz.html">Quiz</a>
+</nav>
+
+<main>
+<h1>HTTP Knowledge Quiz</h1>
+<p>Answer all 10 questions. You have 10 minutes.</p>
+
+<h2>Time Left: <span id="timer">10:00</span></h2>
+
+<!-- Quiz Questions -->
+<form id="quiz">
+
+<h3>1. What does HTTP stand for?</h3>
+<input type="text" name="q1">
+
+<h3>2. What is the main function of HTTP?</h3>
+<label><input type="radio" name="q2" value="A"> Protect computers from viruses</label><br>
+<label><input type="radio" name="q2" value="B"> Allow browsers and servers to communicate</label><br>
+<label><input type="radio" name="q2" value="C"> Create website designs</label>
+
+<h3>3. Which is NOT an HTTP key term?</h3>
+<label><input type="radio" name="q3" value="A"> Client</label><br>
+<label><input type="radio" name="q3" value="B"> Server</label><br>
+<label><input type="radio" name="q3" value="C"> Keyboard</label><br>
+<label><input type="radio" name="q3" value="D"> Request</label>
+
+<h3>4. What port does HTTP normally use?</h3>
+<label><input type="radio" name="q4" value="A"> 443</label><br>
+<label><input type="radio" name="q4" value="B"> 80</label><br>
+<label><input type="radio" name="q4" value="C"> 21</label><br>
+<label><input type="radio" name="q4" value="D"> 25</label>
+
+<h3>5. HTTP is encrypted by default.</h3>
+<label><input type="radio" name="q5" value="True"> True</label><br>
+<label><input type="radio" name="q5" value="False"> False</label>
+
+<h3>6. HTTPS stands for Hypertext Transfer Protocol Safe.</h3>
+<label><input type="radio" name="q6" value="True"> True</label><br>
+<label><input type="radio" name="q6" value="False"> False</label>
+
+<h3>7. What does a server send back after an HTTP request?</h3>
+<input type="text" name="q7">
+
+<h3>8. Which are HTTP request methods? Select all that apply.</h3>
+<label><input type="checkbox" name="q8" value="GET"> GET</label><br>
+<label><input type="checkbox" name="q8" value="POST"> POST</label><br>
+<label><input type="checkbox" name="q8" value="SEND"> SEND</label><br>
+<label><input type="checkbox" name="q8" value="DELETE"> DELETE</label>
+
+<h3>9. What does HTTP status code 404 mean?</h3>
+<label><input type="radio" name="q9" value="A"> Successful request</label><br>
+<label><input type="radio" name="q9" value="B"> Page not found</label><br>
+<label><input type="radio" name="q9" value="C"> Server working normally</label><br>
+<label><input type="radio" name="q9" value="D"> Website is secure</label>
+
+<h3>10. Which protocol provides encrypted communication?</h3>
+<label><input type="radio" name="q10" value="A"> HTTP</label><br>
+<label><input type="radio" name="q10" value="B"> FTP</label><br>
+<label><input type="radio" name="q10" value="C"> HTTPS</label><br>
+<label><input type="radio" name="q10" value="D"> SMTP</label>
+
+<br><br>
+<button type="submit">Submit Quiz</button>
+<button type="button" onclick="resetQuiz()">Retake Quiz</button>
+</form>
+
+<!-- Results appear here -->
+<div id="results" aria-live="polite"></div>
+</main>
+
+<script>
+// Correct answers
+let answers = [
+"hypertext transfer protocol",
+"B", "C", "B", "False", "False",
+"response", "DELETE,GET,POST", "B", "C"];
+
+let correctAnswers = [
+"Hypertext Transfer Protocol",
+"Allow browsers and servers to communicate",
+"Keyboard",
+"Port 80",
+"False",
+"False - Hypertext Transfer Protocol Secure",
+"Response",
+"GET, POST, DELETE",
+"Page not found",
+"HTTPS"
+];
+
+let time = 600;
+let finished = false;
+
+// 10-minute timer
+let timer = setInterval(function() {
+if (finished) return;
+
+time--;
+let minutes = Math.floor(time / 60);
+let seconds = time % 60;
+
+document.getElementById("timer").textContent =
+minutes + ":" + String(seconds).padStart(2, "0");
+
+if (time <= 0) checkQuiz();}, 1000);
+
+// Check answers when submitted
+document.getElementById("quiz").onsubmit = function(event) {
+event.preventDefault();
+checkQuiz();};
+
+// Grade the quiz
+function checkQuiz() {
+if (finished) return;
+finished = true;
+clearInterval(timer);
+
+let form = document.getElementById("quiz");
+let data = new FormData(form);
+let score = 0;
+let results = "<h2>Question Results</h2>";
+
+for (let i = 1; i <= 10; i++) {let answer = "";
+
+if (i === 8) {answer = data.getAll("q8").sort().join(",");} else {answer = (data.get("q" + i) || "").trim();}
+
+if (i === 1 || i === 7) {
+answer = answer.toLowerCase().replace(/\s+/g, " ");}
+
+let correct = answer === answers[i - 1];
+if (correct) score++;
+
+let color = correct ? "green" : "red";
+let status = correct ? "Correct" : "Incorrect";
+
+results += "<p style='color:" + color + "'>" +
+"Question " + i + ": " + status +
+" (" + (correct ? 1 : 0) + "/1)<br>" +
+"Answer: " + correctAnswers[i - 1] + "</p>";}
+
+let passed = score >= 7;
+let used = 600 - time;
+let minutes = Math.floor(used / 60);
+let seconds = used % 60;
+
+document.getElementById("results").innerHTML =
+"<h2 style='color:" + (passed ? "green" : "red") + "'>" +
+(passed ? "PASS" : "FAIL") + "</h2>" +
+"<h3>Score: " + score + "/10 (" + score * 10 + "%)</h3>" +
+"<p>Time Spent: " + minutes + " min " + seconds + " sec</p>" +
+results;
+
+form.querySelectorAll("input").forEach(function(input) {
+input.disabled = true;});
+
+document.getElementById("results").scrollIntoView();}
+
+// Reset the quiz and timer
+function resetQuiz() {
+location.reload();}
+</script>
+
+</body>
+</html>
