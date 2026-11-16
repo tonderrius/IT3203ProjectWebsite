@@ -34,3 +34,34 @@ nav a:hover {color: red;}
 footer {border-top: 1px solid gray;
 margin-top: 30px;
 padding: 10px;}
+
+
+/* Quiz Styling */
+#quiz {background-color: white;
+padding: 20px;
+border-radius: 10px;}
+
+#quiz h3 {margin-top: 25px;}
+
+#quiz input[type="text"] {padding: 10px;
+width: 90%;
+max-width: 400px;
+border: 1px solid gray;}
+
+#quiz label {display: inline-block;
+padding: 5px;}
+
+button {background-color: darkblue;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;}
+
+button:hover {background-color: blue;}
+
+#results {background-color: white;
+padding: 15px;
+margin-top: 20px;
+border-radius: 10px;}
+
